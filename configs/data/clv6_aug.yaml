@@ -1,0 +1,10 @@
+_target_: src.data.clevr6_aug_datamodule.CLEVR6AugDataModule
+name: "clv6_aug"
+data_dir: ${paths.data_dir}clevr_with_masks/CLEVR6
+img_size: 128
+crop_size: 192
+template_size: 240
+batch_size: 64
+num_workers: 4
+pin_memory: False
+transform_contents: \'scale,translate,color,vflip,hflip\'

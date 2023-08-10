@@ -1,0 +1,20 @@
+defaults:
+  - model_checkpoint.yaml
+  # - early_stopping.yaml
+  - model_summary.yaml
+  - rich_progress_bar.yaml
+  - learning_rate_monitor.yaml
+  - _self_
+
+model_checkpoint:
+  dirpath: ${paths.output_dir}/checkpoints
+  filename: "epoch={epoch:03d}_val_ari={val/ari:.4f}"
+  monitor: "val/ari"
+  save_last: True
+  save_top_k: -1
+  mode: "max"
+  every_n_epochs: 40
+  auto_insert_metric_name: False
+
+model_summary:
+  max_depth: -1

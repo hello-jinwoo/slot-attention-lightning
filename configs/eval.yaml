@@ -1,0 +1,17 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - data: mnist.yaml # choose datamodule with `test_dataloader()` for evaluation
+  - model: mnist.yaml
+  - trainer: default.yaml
+  - paths: default.yaml
+  - extras: default.yaml
+  - hydra: eval.yaml
+  - callbacks: null
+  - experiment: null  
+
+tags: ["dev"]
+
+task_name: "eval"
+ckpt_path: null

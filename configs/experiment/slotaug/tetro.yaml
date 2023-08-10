@@ -1,0 +1,39 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=example
+
+defaults:
+  - override /data: tetro_aug.yaml
+  - override /model: slotaug_ae.yaml
+  - override /callbacks: default.yaml
+  - override /trainer: gpu.yaml
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+data:
+  batch_size: 64
+  num_workers: 4
+
+model:
+  net:
+    img_size: 64
+    num_slots: 4
+
+tags:
+- ${data.name}
+- ${model.name}
+
+seed: null
+
+# simply provide checkpoint path to resume training
+ckpt_path: null
+
+callbacks:
+  model_checkpoint:
+    filename: "epoch={epoch:03d}_val_ari={val/ari_aug:.4f}"
+    monitor: "val/ari_aug"
+    
+trainer:
+  gradient_clip_val: 5.0

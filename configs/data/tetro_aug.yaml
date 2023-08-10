@@ -1,0 +1,11 @@
+_target_: src.data.tetro_aug_datamodule.TETROAugDataModule
+name: "tetro_aug"
+data_dir: ${paths.data_dir}tetrominoes
+img_size: 64
+crop_size: 64 # 64 + 8*2
+template_size: 80
+padding_size: 28
+batch_size: 64
+num_workers: 4
+pin_memory: False
+transform_contents: 'translate' # string, split by comma (,)
