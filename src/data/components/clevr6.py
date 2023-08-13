@@ -1,5 +1,6 @@
 import json
 import os
+import random
 from collections import defaultdict
 
 import torch
@@ -15,6 +16,7 @@ class CLEVR6(Dataset):
         img_size: int = 128,
         transform: transforms.Compose = None,
         train: bool = True,
+        num_samples: int = 0,
     ):
         super().__init__()
 
@@ -33,6 +35,10 @@ class CLEVR6(Dataset):
         )
 
         self.files = sorted(os.listdir(self.image_dir))
+        # sample N images
+        random.seed(707)
+        random.shuffle(self.files)
+        self.files = self.files[:num_samples]
         self.num_files = len(self.files)
 
         self.transform = transform
