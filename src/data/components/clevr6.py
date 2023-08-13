@@ -35,10 +35,10 @@ class CLEVR6(Dataset):
         )
 
         self.files = sorted(os.listdir(self.image_dir))
-        # sample N images
-        random.seed(707)
-        random.shuffle(self.files)
-        self.files = self.files[:num_samples]
+        if num_samples > 0: # sample N images
+            random.seed(707)
+            random.shuffle(self.files)
+            self.files = self.files[:num_samples]
         self.num_files = len(self.files)
 
         self.transform = transform
