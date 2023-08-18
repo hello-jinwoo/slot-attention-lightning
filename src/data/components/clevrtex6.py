@@ -35,6 +35,10 @@ class ClevrTex6(Dataset):
         self.scene_dir = os.path.join(data_dir, "scenes")
 
         self.files = sorted(os.listdir(self.image_dir))
+        if num_samples > 0: # sample N images
+            random.seed(707)
+            random.shuffle(self.files)
+            self.files = self.files[:num_samples]
         self.num_files = len(self.files)
 
         self.transform = transform
