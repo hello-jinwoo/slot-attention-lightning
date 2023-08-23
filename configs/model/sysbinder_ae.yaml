@@ -1,0 +1,36 @@
+_target_: src.models.sysbinder_ae_module.LitSysBinderAutoEncoder
+
+name: "sysbinder"
+
+optimizer:
+  _target_: torch.optim.AdamW
+  _partial_: true
+  lr: 0.0004
+
+scheduler:
+  scheduler:
+    _target_: torch.optim.lr_scheduler.LambdaLR
+    _partial_: true
+  warmup_steps: 20
+  decay_steps: 200
+  decay_rate: 0.5
+
+net:
+  _target_: src.models.components.sysbinder.sysbinder_ae.SysBinderAutoEncoder
+  img_size: 128
+  img_dim: 3
+  num_slots: 7
+  num_iterations: 3
+  hid_dim: 64
+  slot_dim: 64
+  mlp_hid_dim: 128
+  num_prototypes: 64
+  vocab_size: 4096
+  d_model: 192
+  num_blocks: 8
+  num_decoder_heads: 4
+  num_decoder_layers: 8
+  dropout: 0.1
+  tau_start: 1.0
+  tau_final: 0.1
+  tau_steps: 30000
