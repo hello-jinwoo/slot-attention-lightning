@@ -42,6 +42,7 @@ class PTRDataModule(LightningDataModule):
         batch_size: int = 64,
         num_workers: int = 0,
         pin_memory: bool = False,
+        num_samples: int = 0,
     ):
         super().__init__()
 
@@ -83,6 +84,7 @@ class PTRDataModule(LightningDataModule):
             img_size=self.hparams.img_size,
             transform=self.transforms,
             train=True,
+            num_samples=self.hparams.num_samples,
         )
 
         self.data_val = PTR(
@@ -90,6 +92,7 @@ class PTRDataModule(LightningDataModule):
             img_size=self.hparams.img_size,
             transform=self.transforms,
             train=False,
+            num_samples=self.hparams.num_samples,
         )
 
     def train_dataloader(self):

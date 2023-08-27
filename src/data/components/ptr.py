@@ -1,5 +1,6 @@
 import json
 import os
+import random
 from collections import defaultdict
 
 import torch
@@ -16,6 +17,7 @@ class PTR(Dataset):
         img_size: int = 128,
         transform: transforms.Compose = None,
         train: bool = True,
+        num_samples: int = 0,
     ):
         super().__init__()
 
@@ -31,12 +33,25 @@ class PTR(Dataset):
         self.scene_dir = os.path.join(data_dir, "scenes")
 
         self.files = sorted(os.listdir(self.image_dir))
+        if num_samples > 0: # sample N images
+            random.seed(707)
+            random.shuffle(self.files)
+            self.files = self.files[:num_samples]
         self.num_files = len(self.files)
 
         self.transform = transform
 
+        if not train:
+            self.masks = defaultdict(list)
+            masks = sorted(os.listdir(self.mask_dir))
+            for mask in masks:
+                split = mask.split("_")
+                filename = "_".join(split[:3]) + ".png"
+                self.masks[filename].append(mask)
+            del masks
+
     def __getitem__(self, index):
-        filename = self.metadata["scenes"][index]["image_filename"]
+        filename = self.files[index]
 
         img = (
             read_image(os.path.join(self.image_dir, filename), ImageReadMode.RGB)
